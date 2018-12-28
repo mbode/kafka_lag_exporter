@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:2.12-2.1.0
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  consumer:
+    build: kafkacat
+    command: "/bin/sh -c './wait-for-it.sh kafka:9092 -- kafkacat -b kafka:9092 -X topic.auto.offset.reset=earliest  -c 3 -G mygroup test'"
+    depends_on:
+      - kafka
+  producer:
+    build: kafkacat
+    command: "/bin/sh -c 'echo \"record1\nrecord2\nrecord3\nrecord4\" | ./wait-for-it.sh kafka:9092 -- kafkacat -b kafka:9092 -t test -P'"
+    depends_on:
+      - kafka
+      - consumer
+  kafka_lag_exporter:
+    image: kafka_lag_exporter
+    command:
+      - "-k"
+      - "kafka:9092"
+      - "-t"
+      - "20000"
+    ports:
+      - "9526:9526"
+    depends_on:
+      - kafka
+  prometheus:
+    image: prom/prometheus:v2.5.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
