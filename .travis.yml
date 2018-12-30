@@ -1,10 +1,8 @@
 ---
-jobs:
-  include:
-  - language: java
-    script:
-    - ./gradlew check
-    - ./gradlew integrationTest
+language: java
+script:
+- ./gradlew check
+- ./gradlew integrationTest
 
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
