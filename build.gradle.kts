@@ -44,7 +44,7 @@ dependencies {
 
     val integrationTestImplementation by configurations
     testImplementation("com.mashape.unirest:unirest-java:1.4.9")
-    integrationTestImplementation("org.awaitility:awaitility:3.1.3")
+    integrationTestImplementation("org.awaitility:awaitility:3.1.5")
 }
 
 java {
