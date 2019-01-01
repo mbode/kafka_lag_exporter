@@ -1,3 +1,8 @@
+This project is in a very early phase.
+For a more production-ready exporter refer to e.g. [danielqsj/kafka_exporter](https://github.com/danielqsj/kafka_exporter).
+
+---
+
 # kafka_lag_exporter
 
 [![Build Status](https://travis-ci.org/mbode/kafka_lag_exporter.svg?branch=master)](https://travis-ci.org/mbode/kafka_lag_exporter)
