@@ -3,6 +3,7 @@ package com.github.mbode.kafkalagexporter;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
@@ -21,6 +22,7 @@ public class KafkaLagExporter implements Callable<Void> {
     required = true,
     description = "Connection string that is used to connect to Kafka cluster, e.g. localhost:9092."
   )
+  @Setter
   private String kafkaConnectString;
 
   @CommandLine.Option(
@@ -44,6 +46,7 @@ public class KafkaLagExporter implements Callable<Void> {
     defaultValue = "9526",
     description = "Port the Prometheus HTTP endpoint is exposed to, defaults to 9526."
   )
+  @Setter
   private int port;
 
   @CommandLine.Option(
