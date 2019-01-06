@@ -82,3 +82,9 @@ spotless {
     java { googleJavaFormat() }
     kotlinGradle { ktlint() }
 }
+
+jib {
+    to {
+        image = "maximilianbode/kafka_lag_exporter"
+    }
+}

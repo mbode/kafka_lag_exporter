@@ -27,7 +27,7 @@ services:
       - kafka
       - consumer
   kafka_lag_exporter:
-    image: kafka_lag_exporter
+    image: maximilianbode/kafka_lag_exporter
     command:
       - "-k"
       - "kafka:9092"

@@ -7,6 +7,7 @@ For a more production-ready exporter refer to e.g. [danielqsj/kafka_exporter](ht
 
 [![Build Status](https://travis-ci.org/mbode/kafka_lag_exporter.svg?branch=master)](https://travis-ci.org/mbode/kafka_lag_exporter)
 [![codecov](https://codecov.io/gh/mbode/kafka_lag_exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/mbode/kafka_lag_exporter)
+[![Docker Hub](https://img.shields.io/docker/pulls/maximilianbode/kafka_lag_exporter.svg)](https://hub.docker.com/r/maximilianbode/kafka_lag_exporter)
 
 ## Usage
 ```
