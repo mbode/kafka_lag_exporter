@@ -31,6 +31,7 @@ public class KafkaLagExporter implements Callable<Void> {
     description =
         "Timeout (in milliseconds) used when connecting to Kafka cluster, defaults to 5000."
   )
+  @Setter
   private int timeoutMs;
 
   @CommandLine.Option(

@@ -92,7 +92,7 @@ class PrometheusAdapterTest {
         new String[] {"group", topic, Integer.toString(partition)});
   }
 
-  private static int getUnusedPort() throws IOException {
+  static int getUnusedPort() throws IOException {
     final int port;
     try (ServerSocket socket = new ServerSocket(0)) {
       socket.setReuseAddress(true);
