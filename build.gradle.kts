@@ -12,6 +12,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.20.0"
     id("org.unbroken-dome.test-sets") version "2.0.3"
     id("com.avast.gradle.docker-compose") version "0.8.12"
+    id("net.researchgate.release") version "2.8.0"
 }
 
 repositories { jcenter() }
@@ -71,6 +72,7 @@ tasks {
         }
     }
     "check" { dependsOn("jacocoTestReport") }
+    "afterReleaseBuild" { dependsOn("jib") }
 }
 
 dockerCompose {
