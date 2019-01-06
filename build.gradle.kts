@@ -23,7 +23,7 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
     implementation("io.prometheus:simpleclient:0.6.0")
     implementation("io.prometheus:simpleclient_httpserver:0.6.0")
-    implementation("info.picocli:picocli:3.8.2")
+    implementation("info.picocli:picocli:3.9.0")
 
     val log4jVersion = "2.11.1"
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")

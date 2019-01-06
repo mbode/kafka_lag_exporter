@@ -2,13 +2,25 @@ package com.github.mbode.kafkalagexporter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.salesforce.kafka.test.junit5.SharedKafkaTestResource;
+import java.util.concurrent.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 class KafkaLagExporterTest {
+  @RegisterExtension static final SharedKafkaTestResource kafka = new SharedKafkaTestResource();
+
   @Test
-  void exporterStartsUpWithMandatoryArg() {
+  void exporterStartsUp() {
     assertThrows(
-        RuntimeException.class, () -> KafkaLagExporter.main(new String[] {"-k", "localhost:9999"}));
+        TimeoutException.class,
+        () ->
+            Executors.newSingleThreadExecutor()
+                .submit(
+                    () -> {
+                      KafkaLagExporter.main(new String[] {"-k", kafka.getKafkaConnectString()});
+                    })
+                .get(5, TimeUnit.SECONDS));
   }
 
   @Test
