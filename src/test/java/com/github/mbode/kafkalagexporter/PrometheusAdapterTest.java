@@ -1,11 +1,13 @@
 package com.github.mbode.kafkalagexporter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.common.collect.ImmutableMap;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.exporter.HTTPServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Collections;
@@ -31,13 +33,16 @@ class PrometheusAdapterTest {
 
   @Test
   void metricsEndpointIsAvailableOnConfigurablePort() throws UnirestException, IOException {
-    final int port;
-    try (ServerSocket socket = new ServerSocket(0)) {
-      socket.setReuseAddress(true);
-      port = socket.getLocalPort();
-    }
+    final int port = getUnusedPort();
     new PrometheusAdapter(kafkaClientWrapper, port);
     assertThat(Unirest.get("http://localhost:" + port).asString().getBody()).isNotEmpty();
+  }
+
+  @Test
+  void exceptionIsThrownWhenPortIsAlreadyTaken() throws IOException {
+    final int port = getUnusedPort();
+    new HTTPServer(port);
+    assertThrows(IOException.class, () -> new PrometheusAdapter(kafkaClientWrapper, port));
   }
 
   @Test
@@ -85,5 +90,14 @@ class PrometheusAdapterTest {
         metricName,
         new String[] {"consumer_group", "topic", "partition"},
         new String[] {"group", topic, Integer.toString(partition)});
+  }
+
+  private static int getUnusedPort() throws IOException {
+    final int port;
+    try (ServerSocket socket = new ServerSocket(0)) {
+      socket.setReuseAddress(true);
+      port = socket.getLocalPort();
+    }
+    return port;
   }
 }
