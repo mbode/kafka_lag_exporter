@@ -88,5 +88,6 @@ spotless {
 jib {
     to {
         image = "maximilianbode/kafka_lag_exporter"
+        tags = setOf("${project.version}")
     }
 }
